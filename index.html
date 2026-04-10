@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Planner</title>
+
+<style>
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #f6f7f4, #fceeee);
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    font-size: 42px;
+    letter-spacing: 4px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+}
+
+/* Days */
+.days {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.days span {
+    margin: 5px;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.days span:hover {
+    background: #e8f3e8;
+    transform: scale(1.1);
+}
+
+.days span.active {
+    background: #8aa88a;
+    color: white;
+}
+
+/* Topbar */
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    margin: 15px 0 20px;
+}
+
+/* Grid */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+/* Cards */
+.card {
+    background: #fff;
+    padding: 15px;
+    border-radius: 16px;
+    border: 2px solid #dce8dc;
+    box-shadow: 8px 8px 0px #e8f3e8;
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-8px) scale(1.02);
+}
+
+.card h3 {
+    font-size: 14px;
+    letter-spacing: 1px;
+    color: #444;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+/* Inputs */
+input, textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    background: #fff3f3;
+}
+
+textarea {
+    height: 90px;
+}
+
+/* Mood */
+.mood {
+    display: flex;
+    justify-content: space-between;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+/* To-Do */
+#taskList li {
+    list-style: none;
+    background: #f7fff7;
+    padding: 8px;
+    margin-bottom: 5px;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Button */
+button {
+    background: #8aa88a;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 30px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+    .grid { grid-template-columns: 1fr; }
+    .topbar { flex-direction: column; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>
+  <span style="color:#8aa88a;">DAILY</span>
+  <span style="color:#e6bcbc;">PLANNER</span>
+</h1>
+
+<div class="days">
+    <span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span>
+</div>
+
+<div class="topbar">
+    <input type="text" placeholder="DATE :">
+    <div>☀️ 🌤️ ☁️ 🌧️ ❄️</div>
+</div>
+
+<div class="grid">
+
+<!-- To Do -->
+<div class="card">
+    <h3>To Do</h3>
+    <input id="taskInput" placeholder="Add task">
+    <button onclick="addTask()">Add</button>
+    <ul id="taskList"></ul>
+</div>
+
+<!-- Goals -->
+<div class="card">
+    <h3>Today's Goals</h3>
+    <textarea id="goals"></textarea>
+</div>
+
+<!-- Appointments -->
+<div class="card">
+    <h3>Appointments</h3>
+    <textarea id="appointments"></textarea>
+</div>
+
+<!-- Meals -->
+<div class="card">
+    <h3>Meals</h3>
+    <input placeholder="Breakfast">
+    <input placeholder="Lunch">
+    <input placeholder="Dinner">
+</div>
+
+<!-- Mood -->
+<div class="card">
+    <h3>Mood</h3>
+    <div class="mood" onclick="setMood(event)">
+        <span>😊</span><span>🙂</span><span>😐</span><span>😢</span><span>😡</span>
+    </div>
+    <input id="mood" placeholder="Selected mood">
+</div>
+
+<!-- Exercise -->
+<div class="card">
+    <h3>Exercise</h3>
+    <input placeholder="Minutes">
+    <input placeholder="Steps">
+</div>
+
+<!-- Water -->
+<div class="card">
+    <h3>Water Intake</h3>
+    <input placeholder="Glasses">
+</div>
+
+<!-- Money -->
+<div class="card">
+    <h3>Money Tracker</h3>
+    <input placeholder="Money In">
+    <input placeholder="Money Out">
+</div>
+
+<!-- Notes -->
+<div class="card">
+    <h3>Notes</h3>
+    <textarea id="notes"></textarea>
+</div>
+
+</div>
+
+<div class="footer">
+    <button onclick="saveData()">Save Planner</button>
+</div>
+
+</div>
+
+<script>
+// Day select
+document.querySelectorAll('.days span').forEach(day => {
+    day.onclick = function () {
+        document.querySelectorAll('.days span').forEach(d => d.classList.remove('active'));
+        this.classList.add('active');
+    }
+});
+
+// Mood
+function setMood(e) {
+    if (e.target.tagName === 'SPAN') {
+        document.getElementById('mood').value = e.target.textContent;
+    }
+}
+
+// Tasks
+function addTask() {
+    let input = document.getElementById("taskInput");
+    let task = input.value.trim();
+    if (!task) return;
+
+    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    tasks.push(task);
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+    input.value = "";
+    loadTasks();
+}
+
+function loadTasks() {
+    let list = document.getElementById("taskList");
+    list.innerHTML = "";
+    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+    tasks.forEach((t, i) => {
+        let li = document.createElement("li");
+        li.textContent = t;
+        li.onclick = () => li.style.textDecoration = "line-through";
+        list.appendChild(li);
+    });
+}
+
+// Save
+function saveData() {
+    localStorage.setItem("goals", goals.value);
+    localStorage.setItem("notes", notes.value);
+    localStorage.setItem("mood", mood.value);
+    alert("Saved!");
+}
+
+// Load
+window.onload = function () {
+    loadTasks();
+    goals.value = localStorage.getItem("goals") || "";
+    notes.value = localStorage.getItem("notes") || "";
+    mood.value = localStorage.getItem("mood") || "";
+};
+</script>
+
+</body>
+</html>

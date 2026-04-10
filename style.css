@@ -1,0 +1,187 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #f6f7f4;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Title */
+h1 {
+    text-align: center;
+    font-size: 42px;
+    letter-spacing: 4px;
+    margin-bottom: 10px;
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: auto;
+}
+
+/* Days */
+.days {
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.days span {
+    margin: 5px;
+    padding: 6px 12px;
+    border: 1px solid #cfcfcf;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.days span:hover {
+    background: #e8f3e8;
+    transform: scale(1.1);
+}
+
+.days span.active {
+    background: #8aa88a;
+    color: white;
+}
+
+/* Top bar */
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 15px 0 20px 0;
+}
+
+.topbar input {
+    width: 220px;
+    background: #fff;
+    border: 1px solid #ddd;
+}
+
+/* Grid */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+/* Cards */
+.card {
+    background: #ffffff;
+    padding: 16px;
+    border-radius: 14px;
+    border: 1.5px solid #dce8dc;
+    box-shadow: 5px 5px 0px #edf6ed;
+    transition: all 0.3s ease;
+}
+
+/* Hover */
+.card:hover {
+    transform: translateY(-6px) scale(1.01);
+}
+
+/* Section Titles */
+.card h3 {
+    font-size: 13px;
+    letter-spacing: 1px;
+    color: #444;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+/* Inputs */
+input, textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    background: #fff6f6;
+    outline: none;
+    transition: 0.3s;
+}
+
+/* Focus */
+input:focus, textarea:focus {
+    border-color: #8aa88a;
+    box-shadow: 0 0 5px rgba(138,168,138,0.3);
+}
+
+/* Textarea */
+textarea {
+    height: 90px;
+}
+
+/* Mood */
+.mood {
+    display: flex;
+    justify-content: space-between;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.mood span {
+    transition: 0.2s;
+}
+
+.mood span:hover {
+    transform: scale(1.4);
+}
+
+/* Water tracker */
+#waterTracker span {
+    font-size: 22px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+/* Button */
+button {
+    background: linear-gradient(135deg, #8aa88a, #6f8f6f);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    margin-top: 30px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    .topbar {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .topbar input {
+        width: 100%;
+    }
+
+    button {
+        width: 100%;
+    }
+}
